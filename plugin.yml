@@ -1,0 +1,39 @@
+name: SimpleGrenades
+author: drtshock
+main: me.shock.grenades.Main
+version: 0.1
+permissions:
+  simplegrenades.*:
+    description: Gives access to all nodes. Default op.
+    default: op
+    children:
+      simplegrenades.flash: true
+      simplegrenades.flash.notnt: true
+      simplegrenades.concussion: true
+      simplegrenades.decoy: true
+      simplegrenades.smoke: true
+      simplegrenades.frag: true
+      simplegrenades.frag.notnt: true
+      simplegrenades.lightning: true
+  simplegrenades.flash:
+    decription: Gives access to flash grenades.
+    default: false
+    children:
+      simplegrenades.flash.notnt: false
+  simplegrenades.frag:
+    description: Gives access to frag grenades.
+    default: false
+    children:
+      simplegrenades.frag.notnt: false
+  simplegrenades.concussion:
+    description: Gives access to concussion grenades.
+    default: false
+  simplegrenades.smoke:
+    description: Gives access to smoke grenades.
+    default: false
+  simplegrenades.decoy:
+    description: Gives access to decoy grenades.
+    default: false
+  simplegrenades.lightning:
+    description: Gives access to lightning grenades.
+    default: false

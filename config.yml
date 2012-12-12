@@ -1,0 +1,16 @@
+# Config for SimpleGrenades.
+Grenades:
+  Flash:
+    radius: 5
+    effectDuration: 5
+    blindness: 1
+    slowness: 2
+    useTnT: false
+  Frag:
+    size: 1
+    useTnT: false
+  Concussion:
+    size: 1
+    confusion: 2
+    slowness: 2
+    effectDuration: 5
