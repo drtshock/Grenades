@@ -23,9 +23,15 @@ public class Main extends JavaPlugin
 		loadConfig();
 		saveConfig();
 	    pm.registerEvents(new LaunchListener(this), this);
+	    pm.registerEvents(new ChestListener(this), this);
 	    
 	    startMetrics();
 	    
+	}
+	
+	public void onDisable()
+	{
+		
 	}
 	
 	public void startMetrics() {

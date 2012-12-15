@@ -23,7 +23,7 @@ public class LaunchListener implements Listener
 {
 
 	
-private ArrayList<Location> explodes = new ArrayList<Location>();
+  private ArrayList<Location> explodes = new ArrayList<Location>();
 	
 	public Main plugin;
 	
@@ -37,6 +37,7 @@ private ArrayList<Location> explodes = new ArrayList<Location>();
 	{
 		// Get the shooter.
 		LivingEntity shooter = event.getEntity().getShooter();
+		
 		
 		// Get the entity shot.
 		EntityType entity = event.getEntityType();
