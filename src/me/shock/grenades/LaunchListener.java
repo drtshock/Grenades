@@ -193,10 +193,27 @@ public class LaunchListener implements Listener
 				// Smoke grenade
 				// Doesn't work
 				if(player.hasPermission("simplegrenades.smoke"));
-				{
-					Location loc = event.getEntity().getLocation();
-					loc.getWorld().playEffect(loc, Effect.SMOKE, 1000);
-				}
+	
+	// Made this while at school
+	// Hope it works
+	
+	{
+	int radius = plugin.getConfig().getInt("Grenades.Smoke.radius");
+        int x = (int)Math.floor(event.getEntity().getLocation().getX()/1);
+        int z = (int)Math.floor(event.getEntity().getLocation().getZ()/1);
+        int y = (int)Math.floor(event.getEntity().getLocation().getY()/1);
+        for(int a = (x-radius); a <= (x+radius); a++){
+            for(int b = (y-radius); b <= (y+radius); b++){
+                for(int c = (z - radius); c <= (z+radius); c++){
+                   World world  = player.getWorld();
+               event.getEntity().getWorld.playEffect(new Location(world,a,b,c), Effect.SMOKE, 4);
+           
+        }
+    }
+}
+}
+
+				
 				
 				// Decoy grenade
 				if(player.hasPermission("simplegrenades.decoy"))
