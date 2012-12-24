@@ -2,21 +2,17 @@ package me.shock.grenades;
 
 import java.util.HashSet;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class ChestListener implements Listener
 {
@@ -38,7 +34,6 @@ public class ChestListener implements Listener
 		if(chestLoc.contains(loc))
 		{
 			event.blockList().clear();
-			Bukkit.getServer().broadcastMessage(ChatColor.GOLD + "Handled stopping explosions");
 
 		}
 	}
@@ -47,22 +42,22 @@ public class ChestListener implements Listener
 	@EventHandler
 	public void onClick(PlayerInteractEvent event)
 	{
+		if(plugin.getConfig().getBoolean("Chest.RedstoneTrap.Enabled") == true)
+		{
 		Action action = event.getAction();
 		
 		if(action == Action.RIGHT_CLICK_BLOCK)
 		{
 			Block block = event.getClickedBlock();
 			Material mat = block.getType();
-			Bukkit.getServer().broadcastMessage(ChatColor.RED + "Right clicked block");
 			
 			if(mat == Material.CHEST)
 			{
 				int power = block.getBlockPower(BlockFace.SELF);
-			    if(power > 1)
+			    if(power > 3)
 			    {
 				    Location loc = block.getLocation();
 				    loc.getWorld().createExplosion(loc, 2, true);
-				    Bukkit.getServer().broadcastMessage(ChatColor.RED + "Chest blown up");
 			    }
 			}
 		}
@@ -71,19 +66,19 @@ public class ChestListener implements Listener
 		{
 			Block block = event.getClickedBlock();
 			Material mat = block.getType();
-			Bukkit.getServer().broadcastMessage(ChatColor.RED + "Right clicked block");
 			
 			if(mat == Material.CHEST)
 			{
 				int power = block.getBlockPower(BlockFace.SELF);
-			    if(power > 1)
+			    if(power > 3)
 			    {
-				    Location loc = block.getLocation();
 				    Player player = event.getPlayer();
 				    player.sendMessage(ChatColor.RED + "Careful! That chest is boobie trapped!");
 			    }
 			}
 		}
+	}
+		return;
 	}
 	
 	

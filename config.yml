@@ -14,3 +14,6 @@ Grenades:
     confusion: 2
     slowness: 2
     effectDuration: 5
+Chest:
+  RedstoneTrap:
+    Enabled: false

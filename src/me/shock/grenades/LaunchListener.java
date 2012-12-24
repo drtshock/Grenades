@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -206,7 +207,7 @@ public class LaunchListener implements Listener
             for(int b = (y-radius); b <= (y+radius); b++){
                 for(int c = (z - radius); c <= (z+radius); c++){
                    World world  = player.getWorld();
-               event.getEntity().getWorld.playEffect(new Location(world,a,b,c), Effect.SMOKE, 4);
+               event.getEntity().getWorld().playEffect(new Location(world,a,b,c), Effect.SMOKE, 4);
            
         }
     }

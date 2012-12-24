@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin
+public class Main extends JavaPlugin implements Listener
 {
 
 	protected FileConfiguration config;
@@ -24,6 +25,8 @@ public class Main extends JavaPlugin
 		saveConfig();
 	    pm.registerEvents(new LaunchListener(this), this);
 	    pm.registerEvents(new ChestListener(this), this);
+	    
+	    //getServer().addRecipe(frag);
 	    
 	    startMetrics();
 	    
@@ -58,10 +61,36 @@ public class Main extends JavaPlugin
 		getConfig().addDefault("Grenades.Concussion.confusion", 2);
 		getConfig().addDefault("Grenades.Concussion.slowness", 2);
 		getConfig().addDefault("Grenades.Concussion.effectDuration", 5);
+		getConfig().addDefault("Chest.RedstoneTrap.Enabled", false);
 		
 		if (!this.file.exists())
 		{	
 			getConfig().options().copyDefaults(true);
 		}
 	}
+	
+	/*
+	ItemMeta meta = new ItemStack(Material.SNOW_BALL, 1).getItemMeta().setDisplayName("frag");
+	ShapelessRecipe frag = new ShapelessRecipe(new ItemStack(Material.SNOW_BALL, 1).setItemMeta(meta)).addIngredient(Material.SNOW_BALL).addIngredient(Material.TNT)
+
+	@EventHandler
+	public void onCraft(CraftItemEvent event)
+	{
+		
+		ItemStack snowball = new ItemStack(Material.SNOW_BALL, 1);
+		
+		if(event.getRecipe() instanceof ShapelessRecipe)
+		{
+			if(event.getRecipe() == frag)
+			{
+				event.setResult(Result.ALLOW);
+				ItemMeta meta = snowball.getItemMeta();
+				meta.setDisplayName(ChatColor.RED + "Frag");
+				event.getInventory().setResult(snowball);
+
+			}
+		}
+	}
+	*/
+	
 }
