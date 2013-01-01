@@ -26,17 +26,6 @@ public class ChestListener implements Listener
 		this.plugin = instance;
 	}
 	
-	// Cancel block breakage on chest explosion.
-	@EventHandler
-	public void explodeEvent(EntityExplodeEvent event)
-	{
-		Location loc = event.getLocation();
-		if(chestLoc.contains(loc))
-		{
-			event.blockList().clear();
-
-		}
-	}
 	
 	
 	@EventHandler
@@ -57,7 +46,10 @@ public class ChestListener implements Listener
 			    if(power > 3)
 			    {
 				    Location loc = block.getLocation();
-				    loc.getWorld().createExplosion(loc, 2, true);
+				    loc.getWorld().createExplosion(loc, 4F, true, false);
+				    /*Added in the new api. source: http://jd.bukkit.org/dev/apidocs/org/bukkit/World.html#createExplosion(org.bukkit.Location, float, boolean, boolean)
+				    * 4F == TNT
+				    */
 			    }
 			}
 		}
