@@ -62,6 +62,12 @@ public class Main extends JavaPlugin implements Listener
 		getConfig().addDefault("Grenades.Concussion.slowness", 2);
 		getConfig().addDefault("Grenades.Concussion.effectDuration", 5);
 		getConfig().addDefault("Chest.RedstoneTrap.Enabled", false);
+		getConfig().addDefault("Claymore.Stone.Enabled", false);
+		getConfig().addDefault("Claymore.Stone.BreakBlocks", false);
+		getConfig().addDefault("Claymore.Stone.Power", 2);
+		getConfig().addDefault("Claymore.Wood.Enabled", false);
+		getConfig().addDefault("Claymore.Wood.BreakBlocks", false);
+		getConfig().addDefault("Claymore.Wood.Power", 1);
 		
 		if (!this.file.exists())
 		{	

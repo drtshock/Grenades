@@ -17,3 +17,12 @@ Grenades:
 Chest:
   RedstoneTrap:
     Enabled: false
+Claymore:
+  Stone:
+    Enabled: false
+    BreakBlocks: false
+    Power: 2
+  Wood:
+    Enabled: false
+    BreakBlocks: false
+    Power: 1

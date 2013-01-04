@@ -1,7 +1,7 @@
 name: SimpleGrenades
 author: drtshock
 main: me.shock.grenades.Main
-version: 0.2
+version: 0.3
 permissions:
   simplegrenades.*:
     description: Gives access to all nodes. Default op.
