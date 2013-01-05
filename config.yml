@@ -13,10 +13,13 @@ Grenades:
     size: 1
     confusion: 2
     slowness: 2
+#yo
+# hi
     effectDuration: 5
 Chest:
   RedstoneTrap:
     Enabled: false
+# Comments
 Claymore:
   Stone:
     Enabled: false
