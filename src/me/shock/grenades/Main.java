@@ -1,6 +1,8 @@
 package me.shock.grenades;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,12 +16,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin implements Listener
 {
 
+	private Commands executor;
+	
 	protected FileConfiguration config;
 	File file;
 	
@@ -29,7 +34,6 @@ public class Main extends JavaPlugin implements Listener
 	
 	public void onEnable()
 	{
-		
 		PluginManager pm = getServer().getPluginManager();
 		
 		loadConfig();
@@ -37,11 +41,9 @@ public class Main extends JavaPlugin implements Listener
 	    pm.registerEvents(new LaunchListener(this), this);
 	    pm.registerEvents(new ChestListener(this), this);
 	    
-	    //getServer().addRecipe(frag);
-	    
 	    startMetrics();
-	    
 	    loadRecipes();
+	    loadCommands();
 	    
 	}
 	
@@ -61,30 +63,113 @@ public class Main extends JavaPlugin implements Listener
 	
 	private void loadConfig()
 	{
-		this.file = new File(getDataFolder() + "/config.yml");
-		
-		getConfig().addDefault("Grenades.Flash.radius", 5);
-		getConfig().addDefault("Grenades.Flash.effectDuration", 5);
-		getConfig().addDefault("Grenades.Flash.blindness", 1);
-		getConfig().addDefault("Grenades.Flash.slowness", 2);
-		getConfig().addDefault("Grenades.Flash.useTnT", false);
-		getConfig().addDefault("Grenades.Frag.size", 1);
-		getConfig().addDefault("Grenades.Frag.useTnT", false);
-		getConfig().addDefault("Grenades.Concussion.size", 1);
-		getConfig().addDefault("Grenades.Concussion.confusion", 2);
-		getConfig().addDefault("Grenades.Concussion.slowness", 2);
-		getConfig().addDefault("Grenades.Concussion.effectDuration", 5);
-		getConfig().addDefault("Chest.RedstoneTrap.Enabled", false);
-		getConfig().addDefault("Claymore.Stone.Enabled", false);
-		getConfig().addDefault("Claymore.Stone.BreakBlocks", false);
-		getConfig().addDefault("Claymore.Stone.Power", 2);
-		getConfig().addDefault("Claymore.Wood.Enabled", false);
-		getConfig().addDefault("Claymore.Wood.BreakBlocks", false);
-		getConfig().addDefault("Claymore.Wood.Power", 1);
-		
-		if (!this.file.exists())
-		{	
-			getConfig().options().copyDefaults(true);
+		PluginDescriptionFile pdfFile = getDescription();
+        String version = pdfFile.getVersion();	
+		/**
+		 * Check to see if there's a config.
+		 * If not then create a new one.
+		 */
+		File config = new File(getDataFolder()+ "/config.yml");
+		if(!config.exists())
+		{
+			try{
+				config.createNewFile();
+			} catch (IOException e) {
+				log.log(Level.SEVERE, "[SimpleGreandes] Couldn't create config");
+			}
+			/**
+			 * Write the config file here.
+			 */
+			try {
+				String two = "  ";
+				String four = "    ";
+				
+				BufferedWriter out = new BufferedWriter(new FileWriter(config, true));
+				out.write("# SimpleGrenades by drtshock");
+				out.newLine();
+				out.write("# Visit www.dev.bukkit.org/server-mods/simplegrenades for help");
+				out.newLine();
+				out.write("# Version. Do not delete or change this or it will erase your config.");
+				out.newLine();
+				out.write("version: " + version);
+				out.write("# Options for all grenades.");
+				out.newLine();
+				out.write("Grenades:");
+				out.newLine();
+				
+				// Flash Grenade
+				out.write(two + "Flash:");
+				out.newLine();
+				out.write(four + "radius: 5");
+				out.newLine();
+				out.write(four + "effectDuration: 5");
+				out.newLine();
+				out.write(four + "blindness: 1");
+				out.newLine();
+				out.write(four + "slowness: 2");
+				out.newLine();
+				out.write(four + "useTnT: false");
+				out.newLine();
+				
+				// Frag Grenade
+				out.write(two + "Frag:");
+				out.newLine();
+				out.write(four + "size: 1");
+				out.newLine();
+				out.write(four + "useTnT: false");
+				out.newLine();
+				
+				// Concussion Grenade
+				out.write(two + "Concussion:");
+				out.newLine();
+				out.write(four + "size: 1");
+				out.newLine();
+				out.write(four + "confusion: 2");
+				out.newLine();
+				out.write(four + "slowness: 2");
+				out.newLine();
+				out.write(four + "effectDuration");
+				out.newLine();
+				
+				// Chest Trap
+				out.write("Chest");
+				out.newLine();
+				out.write(two + "RedstoneTrap");
+				out.newLine();
+				out.write(four + "Enabled: false");
+				out.newLine();
+				
+				// Claymores
+				out.write("Claymore:");
+				out.newLine();
+				out.write(two + "Stone:");
+				out.newLine();
+				out.write(four + "Enabled: false");
+				out.newLine();
+				out.write(four + "BreakBlocks: false");
+				out.newLine();
+				out.write(four + "Power: 2");
+				out.newLine();
+				out.write(two + "Wood:");
+				out.newLine();
+				out.write(four + "Enabled: false");
+				out.newLine();
+				out.write(four + "BreakBlocks: false");
+				out.newLine();
+				out.write(four + "Power: 1");
+				
+				// Smoking gun
+				out.close();
+				
+			} catch (IOException e) {
+				log.log(Level.SEVERE, "[SimpleGrenades] Couldn't write config" + e);
+			}
+			
+			
+		}
+		else if (version != plugin.config.getString("version"))
+		{
+			log.log(Level.SEVERE, "[SimpleGrenades] Your config is out of date. You may be missing key variables.");
 		}
 	}
 	
@@ -122,6 +207,12 @@ public class Main extends JavaPlugin implements Listener
 		
 		log.log(Level.INFO, "[SimpleGrenades] Flash recipe loaded.");
 		
+	}
+	
+	public void loadCommands()
+	{
+		executor = new Commands(this);
+		getCommand("sg").setExecutor(executor);
 	}
 	
 }
