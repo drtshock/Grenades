@@ -2,9 +2,18 @@ package me.shock.grenades;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +24,8 @@ public class Main extends JavaPlugin implements Listener
 	File file;
 	
 	public static Main plugin;
+	
+	Logger log = Bukkit.getServer().getLogger();
 	
 	public void onEnable()
 	{
@@ -29,6 +40,8 @@ public class Main extends JavaPlugin implements Listener
 	    //getServer().addRecipe(frag);
 	    
 	    startMetrics();
+	    
+	    loadRecipes();
 	    
 	}
 	
@@ -75,28 +88,40 @@ public class Main extends JavaPlugin implements Listener
 		}
 	}
 	
-	/*
-	ItemMeta meta = new ItemStack(Material.SNOW_BALL, 1).getItemMeta().setDisplayName("frag");
-	ShapelessRecipe frag = new ShapelessRecipe(new ItemStack(Material.SNOW_BALL, 1).setItemMeta(meta)).addIngredient(Material.SNOW_BALL).addIngredient(Material.TNT)
-
-	@EventHandler
-	public void onCraft(CraftItemEvent event)
+	public void loadRecipes()
 	{
 		
-		ItemStack snowball = new ItemStack(Material.SNOW_BALL, 1);
+		/**
+		 * Add frag grenade
+		 * 2 tnt, 1 snowball
+		 */
+		ItemStack frag = new ItemStack(Material.SNOW_BALL, 1);
+		ItemMeta fragMeta = frag.getItemMeta();
+		ArrayList<String> fragLore = new ArrayList<String>();
+		fragLore.add(ChatColor.RED + "Frag Grenade");
+		fragMeta.setLore(fragLore);
+		frag.setItemMeta(fragMeta);
+		ShapelessRecipe fragRecipe = new ShapelessRecipe(frag).addIngredient(1, Material.SNOW_BALL).addIngredient(2, Material.TNT);
+		getServer().addRecipe(fragRecipe);
 		
-		if(event.getRecipe() instanceof ShapelessRecipe)
-		{
-			if(event.getRecipe() == frag)
-			{
-				event.setResult(Result.ALLOW);
-				ItemMeta meta = snowball.getItemMeta();
-				meta.setDisplayName(ChatColor.RED + "Frag");
-				event.getInventory().setResult(snowball);
-
-			}
-		}
+		log.log(Level.INFO, "[SimpleGrenades] Frag recipe loaded.");
+		
+		/**
+		 * Add flash grenade
+		 * 1 tnt, 1 glowstone dust, 1 snowball
+		 */
+		ItemStack flash = new ItemStack(Material.SNOW_BALL, 1);
+		ItemMeta flashMeta = frag.getItemMeta();
+		ArrayList<String> flashLore = new ArrayList<String>();
+		flashLore.add(ChatColor.RED + "Flash Grenade");
+		flashMeta.setLore(flashLore);
+		flash.setItemMeta(flashMeta);
+		ShapelessRecipe flashRecipe = new ShapelessRecipe(frag).addIngredient(1, Material.SNOW_BALL)
+				.addIngredient(1, Material.TNT).addIngredient(1, Material.GLOWSTONE_DUST);
+		getServer().addRecipe(flashRecipe);
+		
+		log.log(Level.INFO, "[SimpleGrenades] Flash recipe loaded.");
+		
 	}
-	*/
 	
 }
